@@ -89,10 +89,12 @@ class Send
         foreach ($this->tunes as $tune) {
             $tunelist .= "<li>{$this->formatTune($tune)}</li>" . PHP_EOL;
         }
-        $now = new DateTime('2018-02-22 20:00');
-        $thursday = (int)$now->format('N') === 4 && (int)$now->format('G') >= 19;
-        $then = new DateTime(($thursday ? 'next ' : '') . 'thursday 19:00');
-        $diff = $then->diff($now, true);
+        $now = new DateTime();
+        $then = new DateTime('thursday 19:00');
+        if ($now > $then) {
+            $then->add(new DateInterval('P7D'));
+        }
+        $diff = $then->diff($now);
         $h = $diff->format('%a') * 24 + $diff->format('%h');
 
         return <<<HTML
