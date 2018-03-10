@@ -89,8 +89,9 @@ class Send
         foreach ($this->tunes as $tune) {
             $tunelist .= "<li>{$this->formatTune($tune)}</li>" . PHP_EOL;
         }
-        $now = new DateTime();
-        $then = new DateTime('thursday 19:00');
+        $here = new DateTimeZone('Europe/Stockholm');
+        $now = new DateTime('now', $here);
+        $then = new DateTime('thursday 19:00', $here);
         if ($now > $then) {
             $then->add(new DateInterval('P7D'));
         }
